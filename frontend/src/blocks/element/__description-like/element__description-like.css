@@ -1,0 +1,16 @@
+.element__description-like {
+    background-image: url(../../../images/like.svg);
+    background-position: center;
+    background-color: transparent;
+    margin: 0 0 3px;
+    padding: 0;
+    border: none;
+    width: 22px;
+    height: 19px;
+    transition: opacity .6s;
+}
+
+.element__description-like:hover {
+    opacity: .6;
+    cursor: pointer;
+}

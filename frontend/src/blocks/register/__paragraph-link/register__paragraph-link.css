@@ -1,0 +1,9 @@
+.register__paragraph-link {
+  cursor: pointer;
+  text-decoration: none;
+  color: #fff;
+}
+
+.register__paragraph-link:hover {
+  opacity: 0.6;
+}

@@ -1,0 +1,33 @@
+.profile__info-container {
+    display: grid;
+    gap: 16px 18px;
+    grid-template-columns: minmax(min-content, 294px) minmax(min-content, max-content);
+    grid-template-rows: repeat(2, minmax(min-content, max-content));
+    grid-template-areas:
+        "name edit-button"
+        "job .";
+}
+
+@media screen and (max-width: 767px) {
+    .profile__info-container {
+        margin: 26px auto 36px;
+        grid-template-columns: 1fr auto 1fr;
+        gap: 14px 10px;
+        justify-items: center;
+        grid-template-areas:
+            ". name edit-button"
+            ". job .";
+    }
+}
+
+@media screen and (max-width: 424px) {
+    .profile__info-container {
+        margin: 26px auto 36px;
+        grid-template-columns: 1fr minmax(min-content, 189px) 1fr;
+        gap: 14px 10px;
+        justify-items: center;
+        grid-template-areas:
+            ". name edit-button"
+            ". job .";
+    }
+}

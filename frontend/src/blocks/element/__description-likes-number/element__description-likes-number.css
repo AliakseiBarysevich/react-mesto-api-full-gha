@@ -1,0 +1,9 @@
+.element__description-likes-number {
+    color: #000;
+    margin: 0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: calc(16 / 13);
+    text-align: center;
+}
