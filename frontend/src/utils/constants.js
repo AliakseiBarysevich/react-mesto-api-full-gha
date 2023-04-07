@@ -8,8 +8,9 @@ export const validationSettings = {
 };
 
 export const serverInteractionConfig = {
+    url: "api.mestoapp.nomoredomains.monster",
   // url: "http://localhost:3000",
-  url: "http://api.mestoapp.nomoredomains.monster",
+  // url: "http://api.mestoapp.nomoredomains.monster",
   headers: {
     "Content-Type": "application/json",
     // authorization: "7b587be5-7909-4dd7-9779-ccf15578e8cc",
