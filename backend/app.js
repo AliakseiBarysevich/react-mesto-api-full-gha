@@ -19,7 +19,7 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
-mongoose.connect('mongodb://localhost:27017/mestodb');
+mongoose.connect(DB_ADDRESS);
 app.use(helmet());
 app.use(limiter);
 app.use(cors());
