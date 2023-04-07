@@ -7,7 +7,7 @@ const NotFoundError = require('../errors/not-found-err');
 
 const getAllCards = (req, res, next) => {
   Card.find({}).select('-__v')
-    .populate('owner')
+    // .populate('owner')
     .then((cards) => res.status(200).send(cards))
     .catch(next);
 };
@@ -45,7 +45,7 @@ const deleteCard = (req, res, next) => {
 };
 const likeCard = (req, res, next) => {
   Card.findByIdAndUpdate(req.params.cardId, { $addToSet: { likes: req.user._id } }, { new: true }).select('-__v')
-    .populate('owner')
+    // .populate('owner')
     .orFail(() => new NotFoundError('Карточка с указанным id не существует'))
     .then((card) => res.status(200).send(card))
     .catch((err) => {
@@ -61,7 +61,7 @@ const likeCard = (req, res, next) => {
 };
 const dislikeCard = (req, res, next) => {
   Card.findByIdAndUpdate(req.params.cardId, { $pull: { likes: req.user._id } }, { new: true }).select('-__v')
-    .populate('owner')
+    // .populate('owner')
     .orFail(new Error('Card not found'))
     .then((card) => res.status(200).send(card))
     .catch((err) => {

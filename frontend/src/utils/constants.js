@@ -8,9 +8,9 @@ export const validationSettings = {
 };
 
 export const serverInteractionConfig = {
-  url: "https://mesto.nomoreparties.co/v1/cohort-51/",
+  url: "http://localhost:3000",
   headers: {
     "Content-Type": "application/json",
-    authorization: "7b587be5-7909-4dd7-9779-ccf15578e8cc",
+    // authorization: "7b587be5-7909-4dd7-9779-ccf15578e8cc",
   },
 };

@@ -124,7 +124,7 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some((id) => id === currentUser._id);
     // Отправляем запрос в API и получаем обновлённые данные карточки
     api
       .changeLikeCardStatus(card._id, isLiked)
@@ -215,12 +215,13 @@ function App() {
     checkToken(token)
       .then((data) => {
         console.log(data);
-        setUserEmail(data.data.email);
+        setUserEmail(data.email);
         setIsLoggedIn(true);
         history.push("/");
       })
       .catch((err) => {
         console.log(err);
+        localStorage.removeItem("jwt");
       })
       .finally(() => {
         setIsLoading(false);
@@ -239,7 +240,7 @@ function App() {
   };
 
   if (isLoading) {
-    return <div class="spinner"></div>;
+    return <div className="spinner"></div>;
   }
 
   return (
