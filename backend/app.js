@@ -9,7 +9,7 @@ const { handleError } = require('./middlewares/handleError');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, DB_ADDRESS } = process.env;
 const routes = require('./routes/index');
 
 const limiter = rateLimit({
@@ -19,12 +19,17 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
-mongoose.connect('mongodb://localhost:27017/mestodb');
+mongoose.connect(DB_ADDRESS);
 app.use(helmet());
 app.use(limiter);
 app.use(cors());
 app.use(express.json());
 app.use(requestLogger);
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
 app.use('/', routes);
 
 app.use(errorLogger);
