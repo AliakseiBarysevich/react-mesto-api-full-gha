@@ -174,6 +174,7 @@ function App() {
     register(email, password)
       .then((data) => {
         setIsSignupSuccessful(true);
+        // адпрацоўвае правільна
         setInfoTooltipText("Вы успешно зарегистрировались!");
         handleInfoTooltipOpen();
         history.push("/sign-in");
@@ -181,6 +182,7 @@ function App() {
       .catch((err) => {
         console.log(err);
         setIsSignupSuccessful(false);
+        // адпрацоўвае правільна
         setInfoTooltipText("Что-то пошло не так! Попробуйте ещё раз.");
         handleInfoTooltipOpen();
       })
@@ -202,6 +204,9 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+        setIsLoggedIn(false);
+        setInfoTooltipText("Что-то не так с логином или паролем! Попробуйте ещё раз.");
+        handleInfoTooltipOpen();
       })
       .finally(() => {
         setIsLoading(false);

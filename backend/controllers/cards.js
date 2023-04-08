@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
 const Card = require('../models/card');
 const BadRequestError = require('../errors/bad-request-err');
 const ForbiddenError = require('../errors/forbidden-err');
@@ -7,7 +5,6 @@ const NotFoundError = require('../errors/not-found-err');
 
 const getAllCards = (req, res, next) => {
   Card.find({}).select('-__v')
-    // .populate('owner')
     .then((cards) => res.status(200).send(cards))
     .catch(next);
 };
@@ -17,8 +14,7 @@ const createCard = (req, res, next) => {
   Card.create({ name, link, owner })
     .then((card) => res.status(201).send(card))
     .catch((err) => {
-      // eslint-disable-next-line no-underscore-dangle
-      if (err._message === 'card validation failed') {
+      if (err.name === 'ValidationError') {
         next(new BadRequestError('Переданы некорректные данные при создании карточки.'));
       } else {
         next(err);
@@ -45,15 +41,11 @@ const deleteCard = (req, res, next) => {
 };
 const likeCard = (req, res, next) => {
   Card.findByIdAndUpdate(req.params.cardId, { $addToSet: { likes: req.user._id } }, { new: true }).select('-__v')
-    // .populate('owner')
     .orFail(() => new NotFoundError('Карточка с указанным id не существует'))
     .then((card) => res.status(200).send(card))
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new BadRequestError('Переданы некорректные данные для постановки лайка.'));
-      }
-      if (err.message === 'Card not found') {
-        next(new NotFoundError('Передан несуществующий _id карточки.'));
       } else {
         next(err);
       }
@@ -61,15 +53,11 @@ const likeCard = (req, res, next) => {
 };
 const dislikeCard = (req, res, next) => {
   Card.findByIdAndUpdate(req.params.cardId, { $pull: { likes: req.user._id } }, { new: true }).select('-__v')
-    // .populate('owner')
-    .orFail(new Error('Card not found'))
+    .orFail(() => new NotFoundError('Карточка с указанным id не существует'))
     .then((card) => res.status(200).send(card))
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new BadRequestError('Переданы некорректные данные для снятия лайка.'));
-      }
-      if (err.message === 'Card not found') {
-        next(new NotFoundError('Передан несуществующий _id карточки.'));
       } else {
         next(err);
       }

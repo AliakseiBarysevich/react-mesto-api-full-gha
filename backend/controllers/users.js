@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -38,8 +37,7 @@ const getUserById = (req, res, next) => {
       } else {
         next(err);
       }
-    })
-    .catch(next);
+    });
 };
 const createUser = (req, res, next) => {
   const {
@@ -54,8 +52,7 @@ const createUser = (req, res, next) => {
         name: user.name, about: user.about, avatar: user.avatar, email: user.email,
       }))
       .catch((err) => {
-        // eslint-disable-next-line no-underscore-dangle
-        if (err._message === 'user validation failed') {
+        if (err.name === 'ValidationError') {
           next(new BadRequestError('Переданы некорректные данные при создании пользователя.'));
         }
         if (err.code === MONGO_EMAIL_DUPLICATE_ERROR_CODE) {
@@ -75,8 +72,7 @@ const updateUserInfo = (req, res, next) => {
       return res.status(200).send(user);
     })
     .catch((err) => {
-      // eslint-disable-next-line no-underscore-dangle
-      if (err._message === 'Validation failed') {
+      if (err.name === 'ValidationError') {
         next(new BadRequestError('Переданы некорректные данные при обновлении профиля.'));
       } else {
         next(err);
@@ -93,9 +89,8 @@ const updateUserAvatar = (req, res, next) => {
       return res.status(200).send(user);
     })
     .catch((err) => {
-      // eslint-disable-next-line no-underscore-dangle
-      if (err._message === 'Validation failed') {
-        throw new BadRequestError('Переданы некорректные данные при обновлении аватара.');
+      if (err.name === 'ValidationError') {
+        next(new BadRequestError('Переданы некорректные данные при обновлении аватара.'));
       } else {
         next(err);
       }
@@ -110,8 +105,7 @@ const login = (req, res, next) => {
     })
     .catch((err) => {
       next(new UnauthorizedError('Произошла ошибка аутентификации'));
-    })
-    .catch(next);
+    });
 };
 
 module.exports = {
