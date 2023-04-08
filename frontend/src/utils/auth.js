@@ -1,5 +1,4 @@
-// export const BASE_URL = "https://api.mestoapp.nomoredomains.monster";
-export const BASE_URL = "http://localhost:3000";
+export const BASE_URL = "https://api.mestoapp.nomoredomains.monster";
 
 export const register = (email, password) => {
   return fetch(`${BASE_URL}/signup`, {
@@ -22,7 +21,6 @@ export const authorize = (email, password) => {
 };
 
 export const checkToken = (token) => {
-  // const token = localStorage.getItem('jwt');
 
   return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
